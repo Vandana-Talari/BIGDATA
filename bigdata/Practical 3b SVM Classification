@@ -1,3 +1,5 @@
+B. Implement SVM Classification technique using Social_Network_Ads.csv dataset. Evaluate the performance of classifier.
+
 # Support Vector Machine (SVM)
 # Importing the dataset
 dataset = read.csv('C:\\BDA\\socialNetworking.csv')
