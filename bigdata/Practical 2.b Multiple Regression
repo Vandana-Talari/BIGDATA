@@ -1,3 +1,5 @@
+2B.Apply multiple regressions, if data have a continuous independent variable. Apply on above dataset – binary.csv.
+
 #fetch the data
 college <- read.csv("https://raw.githubusercontent.com/csquared/udacity-dlnd/master/nn/binary.csv")
 head(college)
