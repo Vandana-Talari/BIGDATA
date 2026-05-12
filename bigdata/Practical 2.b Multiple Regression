@@ -27,3 +27,7 @@ predict_reg
 cdplot(as.factor(admit)~ gpa, data=college)
 cdplot(as.factor(admit)~ gre, data=college)
 cdplot(as.factor(admit)~ rank, data=college)
+
+
+
+upload binary.csv file
