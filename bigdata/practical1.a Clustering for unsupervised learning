@@ -1,3 +1,5 @@
+A. Clustering algorithms for unsupervised classificaion. Read a datafile Mall_Customers.csv and apply k-means clustering. Plot the cluster data using R visualizations.
+
 # K-Means Clustering
 
 # Importing the dataset
