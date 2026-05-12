@@ -49,3 +49,5 @@ y_grid = predict(classifier, newdata = grid_set, type = 'class')
 #extra=106 class model with a binary response
 #extra=104 class model with a response having more than two levels
 rpart.plot(classifier, extra = 106)
+
+upload Social_Network_ads.csv file
