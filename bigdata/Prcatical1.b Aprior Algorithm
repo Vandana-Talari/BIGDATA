@@ -1,3 +1,5 @@
+B.Implement Apriori Algorithm Recommending grocery items to a customer that is most frequently bought together, given a data set of transactions by customers of a store, using built-in Groceries file.
+
 install.packages("arules") 
 install.packages("arulesViz") 
 install.packages("RColorBrewer") 
