@@ -1,3 +1,5 @@
+4A.Naive Bayes Classification: Implement Naïve Bayes Classification technique using Social_Network_Ads.csv dataset. Evaluate the performance of classifier.
+
 # Naive Bayes
 # Importing the dataset
 dataset = read.csv('C:\\BDA\\Social_Network_Ads.csv')
