@@ -1,3 +1,4 @@
+
 A.Import data from web storage – binary.csv. Name the dataset and do Logistic Regression to find out relation between variables that are affecting the admission of a student in an institute based on his or her GRE score, GPA obtained and rank of the student. Also check the model is fit or not.
 
 college <- read.csv("https://raw.githubusercontent.com/csquared/udacity-dlnd/master/nn/binary.csv")
@@ -35,3 +36,7 @@ predict_reg
 # Evaluating model accuracy
 # using confusion matrix
 table(test_reg$admit, predict_reg)
+
+
+
+upload binary.csv file
