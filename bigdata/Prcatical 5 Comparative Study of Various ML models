@@ -1,7 +1,6 @@
 Take the inbuilt data file: iris and perform classification on that data using various classification models – Decision Tree, K Nearest Neighbour and Support Vector Machine. Find the confusion matrix for all three models and evaluate them by finding their accuracy. Find the algorithm which performs best on the given data file, out of all these three models.
 
 Code:-
-Code:
 #PBL
 install.packages('rpart')
 install.packages('rpart.plot')
