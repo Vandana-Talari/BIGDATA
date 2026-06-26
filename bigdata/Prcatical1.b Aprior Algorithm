@@ -1,37 +1,43 @@
 B.Implement Apriori Algorithm Recommending grocery items to a customer that is most frequently bought together, given a data set of transactions by customers of a store, using built-in Groceries file.
 
-install.packages("arules") 
-install.packages("arulesViz") 
-install.packages("RColorBrewer") 
+# Step 1: Install required packages
+install.packages("arules")
+install.packages("arulesViz")
+install.packages("RColorBrewer")
 
-library(arules) 
-library(arulesViz) 
-library(RColorBrewer) 
+# Step 2: Load the libraries
+library(arules)
+library(arulesViz)
+library(RColorBrewer)
 
-data("Groceries") 
-Groceries 
+# Step 3: Load and explore the built-in dataset
+data("Groceries")
+summary(Groceries)
+class(Groceries)
 
-summary(Groceries) 
-class(Groceries) 
+# Step 4: Generate association rules using the Apriori algorithm
+# Settings: Support = 0.02 (2%), Confidence = 0.2 (20%)
+rules = apriori(Groceries, parameter = list(supp=0.02, conf=0.2))
+summary(rules)
 
-rules = apriori(Groceries, parameter = list(supp = 0.02, conf = 0.2)) 
+# Inspect the first 10 rules
+inspect(rules[1:10])
 
-summary(rules) inspect(rules[1:10]) 
-
+# Step 5: Visualizing Item Frequency
 arules::itemFrequencyPlot(Groceries, topN = 20, 
                           col = brewer.pal(8, 'Pastel2'), 
                           main = 'Relative Item Frequency Plot', 
                           type = "relative", 
-                          ylab = "Item Frequency(Relative)") 
+                          ylab = "Item Frequency(Relative)")
 
-itemset = apriori(Groceries, parameter = list(minlen=2, maxlen=2, support=0.02, 
-target="frequent itemset")) 
+# Step 6: Mining Frequent Itemsets (Sets of 2 items)
+itemset = apriori(Groceries, parameter = list(minlen = 2, maxlen = 2, 
+                                              support = 0.02, target="frequent itemset"))
+summary(itemset)
+inspect(itemset[1:10])
 
-summary(itemset) 
-inspect(itemset[1:10]) 
-
-itemsets_3 = apriori(Groceries, parameter = list(minlen=3, maxlen=3, support=0.02, 
-target="frequent itemset")) 
-
-summary(itemsets_3) 
+# Step 7: Mining Frequent Itemsets (Sets of 3 items)
+itemsets_3 = apriori(Groceries, parameter = list(minlen = 3, maxlen = 3, 
+                                                 support = 0.02, target="frequent itemset"))
+summary(itemsets_3)
 inspect(itemsets_3)
