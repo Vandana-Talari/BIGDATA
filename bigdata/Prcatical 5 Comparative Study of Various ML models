@@ -1,87 +1,78 @@
 Take the inbuilt data file: iris and perform classification on that data using various classification models – Decision Tree, K Nearest Neighbour and Support Vector Machine. Find the confusion matrix for all three models and evaluate them by finding their accuracy. Find the algorithm which performs best on the given data file, out of all these three models.
 
 Code:-
-#PBL
 install.packages('rpart')
 install.packages('rpart.plot')
 install.packages('gmodels')
 install.packages('e1071')
+install.packages('caTools')
+install.packages('class')
+
 library(rpart)
 library(rpart.plot)
 library(gmodels)
 library(e1071)
+library(caTools)
+library(class)
 
+# --- Step 2: Dataset Load karna ---
 data(iris)
 summary(iris)
 
-#normalize the continuous variables before performing any analysis on the dataset
+# --- Step 3: Data Normalization ---
+# Continuous variables ko scale karna taaki analysis sahi ho
 temp = as.data.frame(scale(iris[,1:4]))
-temp$Species = iris$Species # levels: setosa versicolor virginica
+temp$Species = iris$Species
 summary(temp)
 
-# Splitting the dataset into the Training set and Test set
-install.packages('caTools')
-library(caTools)
+# --- Step 4: Data Splitting ---
+# Training set (75%) aur Test set (25%) mein divide karna
 set.seed(123)
 split = sample.split(temp$Species, SplitRatio = 0.75)
 train = subset(temp, split == TRUE)
 test = subset(temp, split == FALSE)
 
+# Check rows
 nrow(train)
 nrow(test)
 
-#1. Decision Trees
-dt_classifier = rpart(formula = Species ~ .,data = train)
-
-# Predicting the Test set results
+# --- Step 5: Model 1 - Decision Tree ---
+dt_classifier = rpart(formula = Species ~ ., data = train)
+# Predicting results
 dt_y_pred = predict(dt_classifier, newdata = test, type = 'class')
 print(dt_y_pred)
+# Confusion Matrix
+cm_dt = table(test$Species, dt_y_pred)
+print(cm_dt)
+# Accuracy calculation
+DTaccu = ((12+9+11)/nrow(test))*100
+print(paste("Decision Tree Accuracy: ", DTaccu))
 
-# Making the Confusion Matrix for Decision Tree
-cm = table(test$Species, dt_y_pred)
-print(cm)
-
-#accuracy of DT model
-DTaccu = ((12+9+11)/nrow(test))*100 #true positive nos of 3*3 confusion matrix
-DTaccu
-
-#2. k-Nearest Neighbours
-install.packages("class")
-library(class)
-
+# --- Step 6: Model 2 - k-Nearest Neighbours (kNN) ---
 cl = train$Species
 set.seed(1234)
-knn_y_pred = knn(train[,1:4],test[,1:4],cl,k=5)
+knn_y_pred = knn(train[,1:4], test[,1:4], cl, k=5)
+# Confusion Matrix
+cm_knn = table(test$Species, knn_y_pred)
+print(cm_knn)
+# Accuracy calculation
+KNNaccu = ((12+11+11)/nrow(test))*100
+print(paste("kNN Accuracy: ", KNNaccu))
 
-# cm of k-Nearest Neighbours
-cm = table(test$Species, knn_y_pred)
-print(cm)
+# --- Step 7: Model 3 - Support Vector Machine (SVM) ---
+svmclassifier = svm(Species ~ . , data = train)
+svm_y_pred = predict(svmclassifier, newdata = test)
+# Confusion Matrix
+cm_svm = table(test$Species, svm_y_pred)
+print(cm_svm)
+# Accuracy calculation
+SVMaccu = ((12+11+11)/nrow(test))*100
+print(paste("SVM Accuracy: ", SVMaccu))
 
-#accuracy of KNN model
-KNNaccu = ((12+11+11)/nrow(test))*100 #true positive nos of 3*3 confusion matrix
-KNNaccu
-
-#3. Support Vector Machine(SVM)
-svmclassifier = svm(Species ~ .,data = train)
-svm_y_pred = predict(svmclassifier,newdata = test)
-
-cm = table(test$Species, svm_y_pred)
-print(cm)
-
-#accuracy of SVM model
-SVMaccu = ((12+11+11)/nrow(test))*100 #true positive nos of 3*3 confusion matrix
-SVMaccu
-
-#Decision Tree vs kNN
-which(dt_y_pred != knn_y_pred)
-
-#Decision Tree vs SVM
-which(dt_y_pred != svm_y_pred)
-
-#svm vs kNN
-which(svm_y_pred != knn_y_pred) #both are equal
-
-#Comparison of the accuracy of different models on testing dataset.
-models = data.frame(Technique = c("Decision Tree","kNN","SVM"),
-                    Accuracy_Percentage = c(88.88889,94.44444,94.44444))
-models
+# --- Step 8: Comparison Table ---
+# Teeno models ki accuracy ko ek frame mein dekhna
+models = data.frame(
+  Technique = c("Decision Tree", "kNN", "SVM"),
+  Accuracy_Percentage = c(88.88889, 94.44444, 94.44444)
+)
+print(models)
