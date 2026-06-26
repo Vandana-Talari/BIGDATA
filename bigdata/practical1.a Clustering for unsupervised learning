@@ -1,40 +1,35 @@
 A. Clustering algorithms for unsupervised classificaion. Read a datafile Mall_Customers.csv and apply k-means clustering. Plot the cluster data using R visualizations.
 
-# K-Means Clustering
-
-# Importing the dataset
-dataset = read.csv('C:\\BDA\\Mall_Customers.csv')
+# Step 1: Importing the dataset
+dataset = read.csv('C:/Users/kuzma/OneDrive/Desktop/BDA/Mall_Customers.csv')
 head(dataset)
 
+# Step 2: Selecting relevant columns 
 dataset = dataset[4:5]
 head(dataset)
 
+# Step 3: Determining the optimal number of clusters (The Elbow Method)
 wcss = vector()
+for (i in 1:10) wcss[i] = sum(kmeans(dataset, i)$withinss)
 
-for (i in 1:10)
-{
-  wcss[i] = sum(kmeans(dataset, i)$withinss)
-}
-
-plot(1:10, wcss,
-     type = 'b',
-     main = paste('The Elbow Method'),
-     xlab = 'Number of clusters',
+# Plotting the Elbow Method to find 'k'
+plot(1:10, wcss, type = 'b', 
+     main = paste('The Elbow Method'), 
+     xlab = 'Number of clusters', 
      ylab = 'WSS')
 
-# Fitting K-Means to the dataset with no of clusters = 5
+# Step 4: Fitting K-Means to the dataset
 kmeans = kmeans(x = dataset, centers = 5)
 y_kmeans = kmeans$cluster
 
-# Visualising the clusters
+# Step 5: Visualising the clusters
 library(cluster)
-
-clusplot(dataset,
-         y_kmeans,
-         lines = 0,
-         shade = TRUE,
-         color = TRUE,
-         labels = 2,
-         main = paste('Clusters of customers'),
-         xlab = 'Annual Income',
+clusplot(dataset, 
+         y_kmeans, 
+         lines = 0, 
+         shade = TRUE, 
+         color = TRUE, 
+         labels = 2, 
+         main = paste('Clusters of customers'), 
+         xlab = 'Annual Income', 
          ylab = 'Spending Score')
