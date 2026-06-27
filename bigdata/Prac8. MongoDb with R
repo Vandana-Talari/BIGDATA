@@ -1,0 +1,46 @@
+import pymongo
+
+# MongoDB se connection establish karna
+try:
+    # 27017 default port hota hai MongoDB ka
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    
+    # Database aur Collection (Table) create karna
+    db = client["CollegeDB"]
+    collection = db["Students"]
+
+    print("--- Connection Successful ---\n")
+
+    # A. INSERT: Big data records add karna
+    records = [
+        {"id": 101, "name": "Kuzma", "department": "IT", "marks": 88},
+        {"id": 102, "name": "Sana", "department": "CS", "marks": 92},
+        {"id": 103, "name": "Arjun", "department": "IT", "marks": 75},
+        {"id": 104, "name": "Mehak", "department": "Data Science", "marks": 95}
+    ]
+    
+    collection.insert_many(records)
+    print("Data Inserted Successfully.")
+
+    # B. READ: Data ko fetch karke dikhana
+    print("\n--- Displaying All Records ---")
+    for doc in collection.find({}, {"_id": 0}):
+        print(doc)
+
+    # C. UPDATE: Marks badalna (Manipulation)
+    query = {"name": "Arjun"}
+    new_data = {"$set": {"marks": 82}}
+    collection.update_one(query, new_data)
+    print("\nRecord Updated (Arjun's marks changed to 82).")
+
+    # D. DELETE: Ek record hatana
+    collection.delete_one({"id": 102})
+    print("Record Deleted (ID 102 removed).")
+
+    # E. SEARCH: Specific criteria par data dhundna
+    print("\n--- High Scorers (Marks > 85) ---")
+    for x in collection.find({"marks": {"$gt": 85}}, {"_id": 0}):
+        print(x)
+
+except Exception as e:
+    print("Error connecting to MongoDB:", e)
